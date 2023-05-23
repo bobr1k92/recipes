@@ -1,4 +1,4 @@
-import { RecipeCard } from '../RecipeCard';
+import { RecipeCard } from '../RecipeCard/RecipeCard';
 import PropTypes from 'prop-types';
 import { List } from '../RecipeList.styled';
 
