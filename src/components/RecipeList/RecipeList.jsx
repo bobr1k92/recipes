@@ -17,7 +17,7 @@ export const RecipeList = ({items, onDelete}) => {
 RecipeList.propTyps = {
     items: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.string.isRequired,
         })
     ).isRequired,
 };

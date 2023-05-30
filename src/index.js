@@ -8,6 +8,7 @@ const theme  = {
   black: '#212121',
   white: '#fff',
   accent: 'orangered',
+  error: 'red',
   },
   radil: {
     xs: '2px',
