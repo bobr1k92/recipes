@@ -12,6 +12,28 @@ export class App extends Component {
   };
 
 
+
+componentDidMount(){
+  console.log('componentDidMount');
+  const saveRecipes = localStorage.getItem('resipes');
+  console.log(saveRecipes);
+
+  if(saveRecipes !== null) {
+    this.setState({recipes: JSON.parse(saveRecipes)});
+
+  } else {
+    this.setState({ recipes: initialRecipes })
+    
+  };
+};
+
+componentDidUpdate(prevProps, prevState) {
+  console.log('componentDidUpdate');
+  if (prevState.recipes !== this.state.recipes) {
+    localStorage.setItem('resipes', JSON.stringify(this.state.recipes))
+  };
+};
+
 addRecipe = newRecipe => {
   this.setState(prevStave => ({
     recipes: [...prevStave.recipes, newRecipe]
@@ -29,6 +51,7 @@ deleteRecipe = recipeId => {
 
 
   render(){
+    console.log('render');
     return (
       <Layout>
         <RecipeForm onSave={this.addRecipe}/>
