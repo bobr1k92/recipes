@@ -1,103 +1,86 @@
-import { Component } from "react";
-import { AiOutlineClockCircle, AiOutlinePieChart } from "react-icons/ai";
-import { BsBarChart } from "react-icons/bs";
+import { Component, useState } from 'react';
+import { AiOutlineClockCircle, AiOutlinePieChart } from 'react-icons/ai';
+import { BsBarChart } from 'react-icons/bs';
 import { HiTrash, HiZoomIn } from 'react-icons/hi';
 import PropTypes from 'prop-types';
 import {
-    Container,
-    InfoBlock,
-    Name,
-    Image,
-    Meta,
-    RecipeInfo,
-    BadgeList,
-    Badge,
-    Actions,
-  } from './RecipeCard.styled';
+  Container,
+  InfoBlock,
+  Name,
+  Image,
+  Meta,
+  RecipeInfo,
+  BadgeList,
+  Badge,
+  Actions,
+} from './RecipeCard.styled';
 import { RecipeDifficulty } from 'constants';
-import { ImageModal } from "components/ImageModal/ImageModal";
-export class RecipeCard extends Component {
-    state = {
-        selectedImg: null,
-    };
+import { ImageModal } from 'components/ImageModal/ImageModal';
 
-    setSelectedImg = () => {
-  this.setState({ selectedImg: this.props.item.image });
-};
+export const RecipeCard = ({
+  item: { id, image, name, time, servings, calories, difficulty },
+  onDelete,
+}) => {
+  const [selectedImg, setSelectedImg] = useState(null);
+  return (
+    <Container>
+      <Image src={image} alt={name} />
+      <Meta>
+        <Name>{name}</Name>
 
-closeModal = () => {
-    this.setState({ selectedImg: null });
-};
+        <RecipeInfo>
+          <InfoBlock>
+            <AiOutlineClockCircle size="24" />
+            <span>{time} min</span>
+          </InfoBlock>
+          <InfoBlock>
+            <AiOutlinePieChart size="24" />
+            <span>{servings} servings</span>
+          </InfoBlock>
+          <InfoBlock>
+            <BsBarChart size="24" />
+            <span>{calories} calories</span>
+          </InfoBlock>
+        </RecipeInfo>
 
-    render() {
-        const { selectedImg } = this.state;
-        const { 
-            item: {id, image, name, time, servings, calories, difficulty}, 
-            onDelete 
-        } = this.props;
+        <BadgeList>
+          <Badge
+            active={difficulty === RecipeDifficulty.easy}
+            type={RecipeDifficulty.easy}
+          >
+            Easy
+          </Badge>
+          <Badge
+            active={difficulty === RecipeDifficulty.medium}
+            type={RecipeDifficulty.medium}
+          >
+            Medium
+          </Badge>
+          <Badge
+            active={difficulty === RecipeDifficulty.hard}
+            type={RecipeDifficulty.hard}
+          >
+            Hard
+          </Badge>
+        </BadgeList>
 
-        return(
-            <Container>
-            <Image src={image} alt={name} />
-            <Meta>
-              <Name>{name}</Name>
-    
-              <RecipeInfo>
-                <InfoBlock>
-                  <AiOutlineClockCircle size="24" />
-                  <span>{time} min</span>
-                </InfoBlock>
-                <InfoBlock>
-                  <AiOutlinePieChart size="24" />
-                  <span>{servings} servings</span>
-                </InfoBlock>
-                <InfoBlock>
-                  <BsBarChart size="24" />
-                  <span>{calories} calories</span>
-                </InfoBlock>
-              </RecipeInfo>
-    
-              <BadgeList>
-                <Badge
-                  active={difficulty === RecipeDifficulty.easy}
-                  type={RecipeDifficulty.easy}
-                >
-                  Easy
-                </Badge>
-                <Badge
-                  active={difficulty === RecipeDifficulty.medium}
-                  type={RecipeDifficulty.medium}
-                >
-                  Medium
-                </Badge>
-                <Badge
-                  active={difficulty === RecipeDifficulty.hard}
-                  type={RecipeDifficulty.hard}
-                >
-                  Hard
-                </Badge>
-              </BadgeList>
-    
-              <Actions>
-                <button aria-label="Delete" onClick={() => onDelete(id)}>
-                  <HiTrash />
-                </button>
-                <button aria-label="Zoom" onClick={this.setSelectedImg}>
-                  <HiZoomIn />
-                </button>
-              </Actions>
-            </Meta>
-        <ImageModal 
-        isOpen={selectedImg !== null} 
-        onClose={this.closeModal} 
+        <Actions>
+          <button aria-label="Delete" onClick={() => onDelete(id)}>
+            <HiTrash />
+          </button>
+          <button aria-label="Zoom" onClick={() => setSelectedImg(image)}>
+            <HiZoomIn />
+          </button>
+        </Actions>
+      </Meta>
+      <ImageModal
+        isOpen={selectedImg !== null}
+        onClose={() => setSelectedImg(null)}
         image={selectedImg}
-        />
-     </Container>
-    
-       );
-    };
+      />
+    </Container>
+  );
 };
-
 
 RecipeCard.propTypes = {
   item: PropTypes.shape({
@@ -110,3 +93,83 @@ RecipeCard.propTypes = {
   }).isRequired,
 };
 
+// export class RecipeCard extends Component {
+//   state = {
+//     selectedImg: null,
+//   };
+
+//   setSelectedImg = () => {
+//     this.setState({ selectedImg: this.props.item.image });
+//   };
+
+//   closeModal = () => {
+//     this.setState({ selectedImg: null });
+//   };
+
+//   render() {
+//     const { selectedImg } = this.state;
+//     const {
+//       item: { id, image, name, time, servings, calories, difficulty },
+//       onDelete,
+//     } = this.props;
+
+//     return (
+//       <Container>
+//         <Image src={image} alt={name} />
+//         <Meta>
+//           <Name>{name}</Name>
+
+//           <RecipeInfo>
+//             <InfoBlock>
+//               <AiOutlineClockCircle size="24" />
+//               <span>{time} min</span>
+//             </InfoBlock>
+//             <InfoBlock>
+//               <AiOutlinePieChart size="24" />
+//               <span>{servings} servings</span>
+//             </InfoBlock>
+//             <InfoBlock>
+//               <BsBarChart size="24" />
+//               <span>{calories} calories</span>
+//             </InfoBlock>
+//           </RecipeInfo>
+
+//           <BadgeList>
+//             <Badge
+//               active={difficulty === RecipeDifficulty.easy}
+//               type={RecipeDifficulty.easy}
+//             >
+//               Easy
+//             </Badge>
+//             <Badge
+//               active={difficulty === RecipeDifficulty.medium}
+//               type={RecipeDifficulty.medium}
+//             >
+//               Medium
+//             </Badge>
+//             <Badge
+//               active={difficulty === RecipeDifficulty.hard}
+//               type={RecipeDifficulty.hard}
+//             >
+//               Hard
+//             </Badge>
+//           </BadgeList>
+
+//           <Actions>
+//             <button aria-label="Delete" onClick={() => onDelete(id)}>
+//               <HiTrash />
+//             </button>
+//             <button aria-label="Zoom" onClick={() => setSelectedImg(image)}>
+//               <HiZoomIn />
+//             </button>
+//           </Actions>
+//         </Meta>
+//         <ImageModal
+//           isOpen={selectedImg !== null}
+//           onClose={this.closeModal}
+//           image={selectedImg}
+//         />
+//       </Container>
+//     );
+//   }
+// }
