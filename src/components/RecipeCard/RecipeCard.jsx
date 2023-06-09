@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineClockCircle, AiOutlinePieChart } from 'react-icons/ai';
 import { BsBarChart } from 'react-icons/bs';
 import { HiTrash, HiZoomIn } from 'react-icons/hi';
