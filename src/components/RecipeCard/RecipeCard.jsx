@@ -159,7 +159,7 @@ RecipeCard.propTypes = {
 //             <button aria-label="Delete" onClick={() => onDelete(id)}>
 //               <HiTrash />
 //             </button>
-//             <button aria-label="Zoom" onClick={() => setSelectedImg(image)}>
+//             <button aria-label="Zoom" onClick={this.setSelectedImg}>
 //               <HiZoomIn />
 //             </button>
 //           </Actions>
